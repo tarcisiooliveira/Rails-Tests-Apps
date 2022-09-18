@@ -22,3 +22,24 @@ RSpec.describe Customer, type: :model do
   it { expect(customer.email).to be_include('@') }
   it { expect { create(:customer) }.to change { Customer.all.size }.by(1) }
 end
+
+RSpec.describe 'Definindo Dados da Factorie', Customer, type: :model do
+  let(:customer) do
+    create(:customer, name: 'Tarcisio Oliveira',
+                      email: 'tarcisio@email.com')
+  end
+  # Define o nome para a Factories, podendo então validar o nome completo e não depender
+  # da gem Faker para isso
+
+  it { expect(customer.full_name).to eq('Sr. Tarcisio Oliveira') }
+  it { expect(customer.email).to eq('tarcisio@email.com') }
+end
+
+RSpec.describe 'Usando Aliases', Customer, type: :model do
+  let(:customer) do
+    create(:user, name: 'Tarcisio Oliveira', email: 'tarcisio@email.com')
+  end
+
+  it { expect(customer.full_name).to eq('Sr. Tarcisio Oliveira') }
+  it { expect(customer.email).to eq('tarcisio@email.com') }
+end
