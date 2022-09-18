@@ -22,7 +22,7 @@ RSpec.describe Customer, type: :model do
     expect(usuario.name).to eq('Tarcisio Oliveira')
     expect(usuario.full_name).to eq('Sr. Tarcisio Oliveira')
   end
-  
+
   it 'Create Customer with fixture Fulano' do
     usuario = customers(:fulano)
 
