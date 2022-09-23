@@ -42,4 +42,30 @@ RSpec.describe 'Usando Aliases', Customer, type: :model do
 
   it { expect(customer.full_name).to eq('Sr. Tarcisio Oliveira') }
   it { expect(customer.email).to eq('tarcisio@email.com') }
+  it { expect(customer.vip).to eq(nil) }
+end
+
+RSpec.describe 'Factories com traits', Customer, type: :model do
+  let(:customer) {create(:customer_vip, name: 'Tarcisio Oliveira', 
+                                        email: 'tarcisio@email.com')}
+  it { expect(customer.full_name).to eq('Sr. Tarcisio Oliveira') }
+  it { expect(customer.email).to eq('tarcisio@email.com') }
+  it { expect(customer.vip).to eq(true) }
+end
+
+RSpec.describe 'Usando o attributes_for', Customer, type: :model do
+  # o attributes_for constroi um hash do tipo da classe passada
+  let(:customer) { attributes_for(:customer_default, name: 'Tarcisio Oliveira',
+                                                 email: 'tarcisio@email.com')}
+  let(:new_customer) { Customer.new(customer) }
+  it 'attributes_for' do 
+    puts customer
+    # {:name=>"Tarcisio Oliveira", :email=>"tarcisio@email.com", :vip=>true, :days_to_pay=>30}
+
+    expect(customer[:name]).to eq('Tarcisio Oliveira') 
+  end
+  it { expect(customer[:email]).to eq('tarcisio@email.com') }
+  it { expect(customer[:vip]).to eq(false) }
+  it { expect(new_customer.full_name).to eq('Sr. Tarcisio Oliveira') }
+  it { expect(new_customer.email).to eq('tarcisio@email.com') }
 end
