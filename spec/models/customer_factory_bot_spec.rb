@@ -55,9 +55,15 @@ end
 
 RSpec.describe 'Usando o attributes_for', Customer, type: :model do
   # o attributes_for constroi um hash do tipo da classe passada
-  let(:customer) { attributes_for(:customer_default, name: 'Tarcisio Oliveira',
-                                                 email: 'tarcisio@email.com')}
+  let(:customer) do 
+    attributes_for(:customer_default, name: 'Tarcisio Oliveira',
+                                      email: 'tarcisio@email.com')
+  end 
   let(:new_customer) { Customer.new(customer) }
+
+  let(:transient_customer_true) { create(:customer_vip, name: 'Tarcisio Oliveira', upcased: true) }
+  let(:transient_customer_false) { create(:customer_vip, name: 'Tarcisio Oliveira', upcased: false) }
+
   it 'attributes_for' do 
     puts customer
     # {:name=>"Tarcisio Oliveira", :email=>"tarcisio@email.com", :vip=>true, :days_to_pay=>30}
@@ -68,4 +74,6 @@ RSpec.describe 'Usando o attributes_for', Customer, type: :model do
   it { expect(customer[:vip]).to eq(false) }
   it { expect(new_customer.full_name).to eq('Sr. Tarcisio Oliveira') }
   it { expect(new_customer.email).to eq('tarcisio@email.com') }
+  it { expect(transient_customer_true.name).to eq('TARCISIO OLIVEIRA') }
+  it { expect(transient_customer_false.name).to eq('Tarcisio Oliveira') }
 end
