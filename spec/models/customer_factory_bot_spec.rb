@@ -45,35 +45,63 @@ RSpec.describe 'Usando Aliases', Customer, type: :model do
   it { expect(customer.vip).to eq(nil) }
 end
 
-RSpec.describe 'Factories com traits', Customer, type: :model do
-  let(:customer) {create(:customer_vip, name: 'Tarcisio Oliveira', 
-                                        email: 'tarcisio@email.com')}
-  it { expect(customer.full_name).to eq('Sr. Tarcisio Oliveira') }
-  it { expect(customer.email).to eq('tarcisio@email.com') }
-  it { expect(customer.vip).to eq(true) }
-end
+# RSpec.describe 'Factories com traits', Customer, type: :model do
+#   let(:customer) {create(:customer_vip, name: 'Tarcisio Oliveira', 
+#                                         email: 'tarcisio@email.com')}
+#   it { expect(customer.full_name).to eq('Sr. Tarcisio Oliveira') }
+#   it { expect(customer.email).to eq('tarcisio@email.com') }
+#   it { expect(customer.vip).to eq(true) }
+# end
 
-RSpec.describe 'Usando o attributes_for', Customer, type: :model do
-  # o attributes_for constroi um hash do tipo da classe passada
-  let(:customer) do 
-    attributes_for(:customer_default, name: 'Tarcisio Oliveira',
-                                      email: 'tarcisio@email.com')
-  end 
-  let(:new_customer) { Customer.new(customer) }
+# RSpec.describe 'Usando o attributes_for', Customer, type: :model do
+#   # o attributes_for constroi um hash do tipo da classe passada
+#   let(:customer) do 
+#     attributes_for(:customer_default, name: 'Tarcisio Oliveira',
+#                                       email: 'tarcisio@email.com')
+#   end 
+#   let(:new_customer) { Customer.new(customer) }
 
-  let(:transient_customer_true) { create(:customer_vip, name: 'Tarcisio Oliveira', upcased: true) }
-  let(:transient_customer_false) { create(:customer_vip, name: 'Tarcisio Oliveira', upcased: false) }
+#   let(:transient_customer_true) { create(:customer_vip, name: 'Tarcisio Oliveira', upcased: true) }
+#   let(:transient_customer_false) { create(:customer_vip, name: 'Tarcisio Oliveira', upcased: false) }
 
-  it 'attributes_for' do 
-    puts customer
-    # {:name=>"Tarcisio Oliveira", :email=>"tarcisio@email.com", :vip=>true, :days_to_pay=>30}
+#   it 'attributes_for' do 
+#     puts customer
+#     # {:name=>"Tarcisio Oliveira", :email=>"tarcisio@email.com", :vip=>true, :days_to_pay=>30}
 
-    expect(customer[:name]).to eq('Tarcisio Oliveira') 
-  end
-  it { expect(customer[:email]).to eq('tarcisio@email.com') }
+#     expect(customer[:name]).to eq('Tarcisio Oliveira') 
+#   end
+#   it { expect(customer[:email]).to eq('tarcisio@email.com') }
+#   it { expect(customer[:vip]).to eq(false) }
+#   it { expect(new_customer.full_name).to eq('Sr. Tarcisio Oliveira') }
+#   it { expect(new_customer.email).to eq('tarcisio@email.com') }
+#   it { expect(transient_customer_true.name).to eq('TARCISIO OLIVEIRA') }
+#   it { expect(transient_customer_false.name).to eq('Tarcisio Oliveira') }
+# end
+
+# RSpec.describe 'Customer Male', Customer, type: :model do
+#   let(:customer) { create(:customer_male) }
+#   it { expect(customer.gender).to eq('M') }
+# end
+
+# RSpec.describe 'Customer Female', Customer, type: :model do
+#   let(:customer) { create(:customer_female) }
+#   it { expect(customer.gender).to eq('F') }
+# end
+
+# RSpec.describe 'Customer Male', Customer, type: :model do
+#   let(:customer) { create(:customer_vip, :customer_male) }
+#   it { expect(customer[:vip]).to eq(true) }
+#   it { expect(customer.gender).to eq('M') }
+# end
+
+# RSpec.describe 'Customer Female', Customer, type: :model do
+#   let(:customer) { create(:customer_default, :customer_female) }
+#   it { expect(customer.gender).to eq('F') }
+#   it { expect(customer[:vip]).to eq(false) }
+# end
+
+RSpec.describe 'Customer Female', Customer, type: :model do
+  let(:customer) { create(:customer_default_female) }
+  it { expect(customer.gender).to eq('F') }
   it { expect(customer[:vip]).to eq(false) }
-  it { expect(new_customer.full_name).to eq('Sr. Tarcisio Oliveira') }
-  it { expect(new_customer.email).to eq('tarcisio@email.com') }
-  it { expect(transient_customer_true.name).to eq('TARCISIO OLIVEIRA') }
-  it { expect(transient_customer_false.name).to eq('Tarcisio Oliveira') }
 end
