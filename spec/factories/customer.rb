@@ -6,6 +6,10 @@ FactoryBot.define do
       upcased false
     end
 
+    # Para atributos dinamicos, é necessário colocar a abertura de =>{ }<=
+    # caso contrario, não será possível fazer, por exemplo, concatenação
+    # email nome+"@mail.com" <= Erro
+    # email { nome+"@mail.com" } <= Correto
     name { Faker::Name.name }
     email { Faker::Internet.email }
     gender { %w[M F].sample }
