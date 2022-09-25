@@ -101,7 +101,16 @@ end
 # end
 
 RSpec.describe 'Customer Female', Customer, type: :model do
-  let(:customer) { create(:customer_default_female) }
-  it { expect(customer.gender).to eq('F') }
-  it { expect(customer[:vip]).to eq(false) }
+  let(:customer_1) { create(:customer_email) }
+  let(:customer_2) { create(:customer_email) }
+  it { expect(customer_1.email).to eq('email+1@email.com') }
+  it { expect(customer_2.email).to eq('email+2@email.com') }
+end
+
+RSpec.describe 'Customer Female', Customer, type: :model do
+  let(:customer_1) { create(:customer_new_email) }
+  let(:customer_2) { create(:customer_new_email) }
+
+  it { expect(customer_1.email).to eq('email+22@email.com') }
+  it { expect(customer_2.email).to eq('email+23@email.com') }
 end

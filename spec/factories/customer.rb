@@ -3,7 +3,9 @@
 FactoryBot.define do
   factory :customer, aliases: %i[user father] do
     transient do 
-      upcased false
+      upcased do 
+        false
+      end 
     end
 
     # Para atributos dinamicos, é necessário colocar a abertura de =>{ }<=
@@ -12,6 +14,7 @@ FactoryBot.define do
     # email { nome+"@mail.com" } <= Correto
     name { Faker::Name.name }
     email { Faker::Internet.email }
+    
     gender { %w[M F].sample }
 
     trait :customer_vip do
@@ -32,6 +35,16 @@ FactoryBot.define do
       gender { 'F' }
     end
 
+    trait :email do
+      sequence(:email) { |n| "email+#{n}@email.com" }
+    end
+
+    trait :new_email do
+      sequence(:email, 22) { |n| "email+#{n}@email.com" }
+    end
+
+    factory :customer_email, traits: [:email]
+    factory :customer_new_email, traits: [:new_email]
     factory :customer_male, traits: [:customer_male]
     factory :customer_female, traits: [:customer_female]
     factory :customer_male_vip, traits: [:customer_male, :customer_vip]
