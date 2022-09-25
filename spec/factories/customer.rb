@@ -3,19 +3,25 @@
 FactoryBot.define do
   factory :customer, aliases: %i[user father] do
     transient do 
-      upcased do 
-        false
-      end 
+      upcased { false }
+      qtt_order { 3 }
     end
 
     # Para atributos dinamicos, é necessário colocar a abertura de =>{ }<=
     # caso contrario, não será possível fazer, por exemplo, concatenação
     # email nome+"@mail.com" <= Erro
     # email { nome+"@mail.com" } <= Correto
-    name { Faker::Name.name }
+    name { Faker::Name.name } 
     email { Faker::Internet.email }
+    address { Faker::Address.street_name }
     
     gender { %w[M F].sample }
+
+    trait :with_orders do
+      after(:create) do |customer, evaluator|
+        create_list(:order, evaluator.qtt_order, customer: customer)
+      end
+    end
 
     trait :customer_vip do
       vip { true }

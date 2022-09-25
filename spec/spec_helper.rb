@@ -14,6 +14,14 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+
+  # Factory-bot-Lint
+  # Verifica se as construções das classes passam nos validadores antes de contruir para criar os testes.
+  # Gera problemas de performance
+  config.before(:suite)do 
+    FactoryBot.lint
+  end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
