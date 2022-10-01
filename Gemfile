@@ -46,11 +46,12 @@ group :development, :test do
   gem 'capybara'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'httparty'
   gem 'pry'
   gem 'pry-byebug'
   gem 'rspec-rails'
   gem 'rubocop-rspec'
-  gem 'httparty'
+  gem 'webmock'
 end
 
 group :development do
