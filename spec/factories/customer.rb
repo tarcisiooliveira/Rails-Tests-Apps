@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :customer, aliases: %i[user father] do
-    transient do 
+    transient do
       upcased { false }
       qtt_order { 3 }
     end
@@ -11,10 +11,9 @@ FactoryBot.define do
     # caso contrario, não será possível fazer, por exemplo, concatenação
     # email nome+"@mail.com" <= Erro
     # email { nome+"@mail.com" } <= Correto
-    name { Faker::Name.name } 
+    name { Faker::Name.name }
     email { Faker::Internet.email }
     address { Faker::Address.street_name }
-    
     gender { %w[M F].sample }
 
     trait :with_orders do
